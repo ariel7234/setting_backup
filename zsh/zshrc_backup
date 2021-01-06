@@ -1,0 +1,88 @@
+#test zsh loading time
+#zmodload zsh/zprof
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+#zsh-completions
+# fpath=(/usr/local/share/zsh-completions $fpath)
+
+if [ -f ${HOME}/.zplug/init.zsh ]; then
+	source ${HOME}/.zplug/init.zsh
+fi
+#===================================
+# Supports oh-my-zsh plugins and the like
+# zplug "plugins/git",   from:oh-my-zsh
+
+# Note: To specify the order in which packages should be loaded, use the defer
+#       tag described in the next section
+#===================================
+
+#=========== 使用哪些套件===========
+# Load theme file
+zplug 'dracula/zsh', as:theme
+
+# zplug plugins
+zstyle ':completion:*' menu yes select
+zplug 'zsh-users/zsh-autosuggestions'
+zplug 'qoomon/zsh-lazyload'
+autoload -Uz compinit
+compinit
+#==================================
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+# zplug load --verbose
+zplug load
+
+
+
+# ========= aliases START =========
+alias ls='ls -G'
+alias ll='ls -lG'
+alias la='ls -alG'
+alias cl="clear"
+alias mp3="youtube-dl -f m4a --embed-thumbnail --add-metadata "
+alias mp4="youtube-dl -f --embed-thumbnail --add-metadata mp4 "
+[ -s "/Users/ariel/.web3j/source.sh" ] && source "/Users/ariel/.web3j/source.sh"
+# ========= aliases END ===========
+
+# ========= CUSTOM PATH ===========
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# GOLANG 
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+PATH=$PATH:/Users/ariel/quorum-local/quorum/build/bin
+
+timezsh() {
+	shell=${1-$SHELL}
+	for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+# NVM
+#[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# ======= CUSTOM  PATH END ========
+
+
+# ========== CUSTOM CMD ===========
+source ~/my_cmd/.my_cmd.sh
+# ========== CUSTOM CMD ==========
+
+
+
+#Test zsh loading time END
+#zprof

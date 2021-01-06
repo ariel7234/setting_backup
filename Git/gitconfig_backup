@@ -1,0 +1,7 @@
+[user]
+	name = YEN JU CHEN
+	email = ariel7234@gmail.com
+[merge]
+	tool = vimdiff
+[color]
+	ur = true

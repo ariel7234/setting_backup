@@ -1,0 +1,1 @@
+使用iTerm2內建的功能將profile import 即可
